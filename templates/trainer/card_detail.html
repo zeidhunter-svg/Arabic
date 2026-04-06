@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}{{ card.translation }} | Карточка{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-7">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body p-4">
+                <div class="d-flex flex-wrap justify-content-between gap-3 mb-3">
+                    <span class="badge text-bg-primary">{{ card.category.name }}</span>
+                    <small class="text-muted">Обновлено: {{ card.updated_at|date:"d.m.Y H:i" }}</small>
+                </div>
+                <div class="arabic-word detail-word mb-3" dir="rtl">{{ card.word }}</div>
+                <h1 class="h3 mb-3">{{ card.translation }}</h1>
+                <p class="text-uppercase text-muted small mb-2">Пример употребления</p>
+                <div class="example-box" dir="rtl">{{ card.example }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body p-4">
+                {% if card.image %}
+                    <img src="{{ card.image }}" alt="{{ card.translation }}" class="img-fluid rounded-4 mb-4 object-fit-cover detail-image">
+                {% else %}
+                    <div class="placeholder-image rounded-4 mb-4 d-flex align-items-center justify-content-center">
+                        <span class="text-muted">Изображение не добавлено</span>
+                    </div>
+                {% endif %}
+                <div class="d-grid gap-2">
+                    <a href="{% url 'trainer:card_edit' card.pk %}" class="btn btn-primary">Редактировать</a>
+                    <a href="{% url 'trainer:card_delete' card.pk %}" class="btn btn-outline-danger">Удалить</a>
+                    <a href="{% url 'trainer:card_list' %}" class="btn btn-outline-secondary">Вернуться к списку</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

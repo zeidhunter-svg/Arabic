@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Тест | Тренажёр классического арабского языка{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+    <div>
+        <h1 class="h2 mb-1">Проверка знаний</h1>
+        <p class="text-muted mb-0">Выберите правильный перевод для каждого арабского слова.</p>
+    </div>
+    <a href="{% url 'trainer:quiz' %}" class="btn btn-outline-primary">Сгенерировать новый тест</a>
+</div>
+
+{% if cards_count < 2 %}
+    <div class="alert alert-warning">
+        Для прохождения теста нужно минимум 2 карточки. Добавьте больше данных и попробуйте снова.
+    </div>
+{% elif quiz_payload %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="row g-4">
+            {% for question in quiz_payload %}
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <div class="d-flex flex-wrap justify-content-between gap-3 mb-3">
+                                <span class="badge text-bg-light">{{ question.category }}</span>
+                                <span class="text-muted">Вопрос {{ forloop.counter }}</span>
+                            </div>
+                            <div class="arabic-word mb-2" dir="rtl">{{ question.word }}</div>
+                            <p class="arabic-example text-secondary mb-4" dir="rtl">{{ question.example }}</p>
+                            <div class="row g-3">
+                                {% for option in question.options %}
+                                    <div class="col-md-6">
+                                        <label class="quiz-option w-100">
+                                            <input
+                                                type="radio"
+                                                name="question_{{ question.id }}"
+                                                value="{{ option }}"
+                                                required
+                                                {% if question.selected_answer == option %}checked{% endif %}
+                                            >
+                                            <span>{{ option }}</span>
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="mt-4 d-flex gap-2">
+            <button type="submit" class="btn btn-primary btn-lg">Завершить тест</button>
+            <a href="{% url 'trainer:card_list' %}" class="btn btn-outline-secondary btn-lg">Вернуться к карточкам</a>
+        </div>
+    </form>
+{% else %}
+    <div class="alert alert-info">
+        Пока не удалось сформировать тест. Убедитесь, что в базе данных есть карточки.
+    </div>
+{% endif %}
+{% endblock %}

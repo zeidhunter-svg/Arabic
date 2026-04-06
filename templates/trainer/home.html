@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Главная | Тренажёр классического арабского языка{% endblock %}
+
+{% block content %}
+<section class="hero-section rounded-5 p-4 p-lg-5 mb-5">
+    <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+            <span class="eyebrow mb-3">Образовательная платформа</span>
+            <h1 class="hero-title mb-3">Изучайте лексику как коллекцию ценных карточек, а не как сухой список слов.</h1>
+            <p class="hero-copy mb-4">
+                Здесь можно собирать тематические наборы, рассматривать примеры в контексте и сразу
+                проверять запоминание через небольшой тест. Интерфейс сделан как спокойная учебная среда
+                с акцентом на арабский текст и визуальное сравнение слов.
+            </p>
+            <div class="d-flex flex-wrap gap-3 mb-4">
+                <a href="{% url 'trainer:card_list' %}" class="btn btn-primary btn-lg">Открыть коллекцию</a>
+                <a href="{% url 'trainer:quiz' %}" class="btn btn-outline-primary btn-lg">Пройти тест</a>
+            </div>
+            <div class="hero-pill-row">
+                <span class="hero-pill">Арабский текст с акцентной типографикой</span>
+                <span class="hero-pill">Категории и фильтры</span>
+                <span class="hero-pill">Мини-квиз по карточкам</span>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="hero-side-stack">
+                <div class="stats-card shadow-sm">
+                    <div class="stats-card-header">
+                        <span class="stats-kicker">Текущее содержимое</span>
+                        <span class="stats-badge">Live</span>
+                    </div>
+                    <div class="row text-center g-3">
+                        <div class="col-6">
+                            <div class="stat-value">{{ cards_count }}</div>
+                            <div class="stat-label">карточек</div>
+                        </div>
+                        <div class="col-6">
+                            <div class="stat-value">{{ categories_count }}</div>
+                            <div class="stat-label">категорий</div>
+                        </div>
+                    </div>
+                    <hr>
+                    <p class="mb-0 card-muted">
+                        Проект направлен на развитие и расширение словарного запаса арабского языка.
+                    </p>
+                </div>
+
+                <div class="hero-ornament-panel" aria-hidden="true">
+                    <div class="ornament-frame">
+                        <div class="ornament-core">
+                            <div class="ornament-ring ornament-ring-one"></div>
+                            <div class="ornament-ring ornament-ring-two"></div>
+                            <div class="ornament-star"></div>
+                            <div class="ornament-center"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="row g-4">
+    <div class="col-md-4">
+        <div class="feature-card h-100">
+            <div class="feature-index">01</div>
+            <h3 class="h5">Карточки с примерами</h3>
+            <p class="mb-0 card-muted">Изучайте слова в контексте, просматривайте перевод и примеры предложений.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="feature-card h-100">
+            <div class="feature-index">02</div>
+            <h3 class="h5">Тематические категории</h3>
+            <p class="mb-0 card-muted">Фильтруйте лексику по темам, чтобы сосредоточиться на нужном разделе.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="feature-card h-100">
+            <div class="feature-index">03</div>
+            <h3 class="h5">Интерактивный тест</h3>
+            <p class="mb-0 card-muted">Проверьте знания с помощью случайных вопросов и посмотрите подробный результат.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

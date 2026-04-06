@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Результаты теста{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+    <div>
+        <h1 class="h2 mb-1">Результаты теста</h1>
+        <p class="text-muted mb-0">Посмотрите итоговый балл и разбор по каждому вопросу.</p>
+    </div>
+    <a href="{% url 'trainer:quiz' %}" class="btn btn-primary">Пройти ещё раз</a>
+</div>
+
+<div class="result-summary shadow-sm rounded-4 p-4 mb-4">
+    <div class="display-6 fw-bold mb-2">{{ quiz_result.score }} из {{ quiz_result.total }}</div>
+    <p class="mb-0 text-secondary">
+        {% if quiz_result.score == quiz_result.total %}
+            Отличный результат! Все ответы верны.
+        {% elif quiz_result.score >= 1 %}
+            Хорошее начало. Разберите ошибки и попробуйте снова.
+        {% else %}
+            Пока есть ошибки. Повторите карточки и вернитесь к тесту позже.
+        {% endif %}
+    </p>
+</div>
+
+<div class="row g-4">
+    {% for item in quiz_result.results %}
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="d-flex flex-wrap justify-content-between gap-3 mb-3">
+                        <div class="arabic-word small-word" dir="rtl">{{ item.word }}</div>
+                        {% if item.is_correct %}
+                            <span class="badge text-bg-success">Верно</span>
+                        {% else %}
+                            <span class="badge text-bg-danger">Ошибка</span>
+                        {% endif %}
+                    </div>
+                    <p class="text-muted mb-2">Категория: {{ item.category }}</p>
+                    <p class="arabic-example text-secondary" dir="rtl">{{ item.example }}</p>
+                    <hr>
+                    <p class="mb-1"><strong>Ваш ответ:</strong> {{ item.selected_answer|default:"Ответ не выбран" }}</p>
+                    <p class="mb-0"><strong>Правильный ответ:</strong> {{ item.correct_answer }}</p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+[MASTER]
+ignore=.venv
+load-plugins=pylint_django
+django-settings-module=config.settings
+
+[MESSAGES CONTROL]
+disable=
+    missing-module-docstring,
+    missing-class-docstring,
+    missing-function-docstring,
+    too-few-public-methods,
+    too-many-ancestors,
+    import-outside-toplevel,
+    invalid-name
+
+[FORMAT]
+max-line-length=100
